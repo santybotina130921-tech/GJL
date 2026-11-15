@@ -1,0 +1,45 @@
+/* Letras con contorno: visibles y sin cortarse */
+.contorno {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.3);
+}
+
+/* Tipografía más delgada: títulos en peso medio y texto un poco más fino */
+html .font-display { font-weight: 500; letter-spacing: 0.005em; }
+body { font-weight: 350; }
+
+/* Evita desbordes laterales en cualquier pantalla */
+html, body { max-width: 100%; overflow-x: clip; }
+img, video { max-width: 100%; }
+[id] { scroll-margin-top: 7rem; }
+
+/* Documento imprimible (cuentas de cobro y cotizaciones) */
+.doc-papel { background: #fff; color: #111; }
+@media print {
+  body * { visibility: hidden; }
+  #documento, #documento * { visibility: visible; }
+  #documento { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none; }
+}
+
+/* ---- Adaptación a celulares y tabletas ---- */
+@media (max-width: 1024px) {
+  .py-28 { padding-block: 5.5rem; }
+}
+@media (max-width: 640px) {
+  .py-28 { padding-block: 4rem; }
+  .py-24 { padding-block: 3.5rem; }
+  .py-20 { padding-block: 3rem; }
+  .p-10 { padding: 1.5rem; }
+  /* menos partículas en celulares: más fluidez */
+  .chispa-p:nth-child(n + 13) { display: none; }
+  .rejilla { animation: none; }
+}
+/* Botones y enlaces cómodos de tocar */
+@media (pointer: coarse) {
+  .btn-jgl { min-height: 48px; }
+  .inclinar:hover { transform: none; }
+}
+/* Pantallas muy bajas (celular horizontal) */
+@media (max-height: 520px) and (orientation: landscape) {
+  .md\:min-h-\[88vh\] { min-height: auto; }
+}

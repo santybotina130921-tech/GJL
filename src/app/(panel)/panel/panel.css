@@ -1,0 +1,48 @@
+.fondo-panel {
+  background-image:
+    radial-gradient(900px circle at 85% -10%, rgba(var(--primary-rgb), 0.12), transparent 60%),
+    linear-gradient(color-mix(in srgb, var(--border) 45%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--border) 45%, transparent) 1px, transparent 1px);
+  background-size: auto, 64px 64px, 64px 64px;
+  background-attachment: fixed;
+}
+
+/* Tarjeta con luz que sigue al mouse */
+.brillo { position: relative; overflow: hidden; transition: transform 0.3s, border-color 0.3s; }
+.brillo::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 0.3s;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(var(--primary-rgb), 0.2), transparent 60%);
+}
+.brillo:hover { transform: translateY(-3px); border-color: rgba(var(--primary-rgb), 0.6); }
+.brillo:hover::before { opacity: 1; }
+
+/* Barras del gráfico */
+@keyframes crecer { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+.barra { transform-origin: bottom; animation: crecer 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+
+/* Anillo de progreso */
+.anillo-progreso .v {
+  stroke-dasharray: var(--c); stroke-dashoffset: var(--c);
+  animation: dibujar-anillo 1.4s 0.2s cubic-bezier(0.3, 0, 0.2, 1) forwards;
+}
+@keyframes dibujar-anillo { to { stroke-dashoffset: var(--off); } }
+
+/* Esqueleto de carga */
+@keyframes brillar { to { background-position: -200% 0; } }
+.esqueleto {
+  background: linear-gradient(90deg, var(--card) 25%, var(--muted) 50%, var(--card) 75%);
+  background-size: 200% 100%; animation: brillar 1.4s linear infinite;
+}
+
+/* Menú lateral */
+.nav-activo { background: var(--background); box-shadow: inset 3px 0 0 var(--primary), 0 0 28px -12px var(--primary); }
+@keyframes latido {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0.6); }
+  50% { box-shadow: 0 0 0 6px rgba(var(--primary-rgb), 0); }
+}
+.punto-vivo { animation: latido 1.8s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .barra, .esqueleto, .punto-vivo { animation: none; }
+  .anillo-progreso .v { animation: none; stroke-dashoffset: var(--off); }
+}

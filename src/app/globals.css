@@ -128,3 +128,39 @@
     @apply font-mono;
   }
 }
+/* ---- JGL ---- */
+@theme inline {
+  --font-display: var(--font-titulos);
+  --font-sans: var(--font-texto);
+}
+
+@keyframes subir { to { transform: none; } }
+@keyframes aparecer { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes soldar { to { width: min(100%, 520px); } }
+@keyframes chispa { to { opacity: .5; transform: scale(1.7); } }
+@keyframes apagar { to { opacity: 0; } }
+
+.linea-titulo { display: block; overflow: hidden; padding-bottom: .08em; }
+.linea-titulo > span {
+  display: block;
+  transform: translateY(108%);
+  animation: subir .9s cubic-bezier(.2,.8,.2,1) forwards;
+  animation-delay: calc(var(--d) * .14s + .15s);
+}
+.aparece { opacity: 0; animation: aparecer .8s forwards; animation-delay: var(--retardo, .8s); }
+.cordon {
+  position: relative; height: 2px; width: 0;
+  background: linear-gradient(90deg, var(--foreground), transparent);
+  animation: soldar 1.8s .5s cubic-bezier(.4,0,.2,1) forwards;
+}
+.cordon::after {
+  content: ""; position: absolute; right: -4px; top: -4px;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--foreground); box-shadow: 0 0 14px 6px var(--foreground);
+  animation: chispa .12s .5s 15 alternate, apagar .4s 2.4s forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .linea-titulo > span, .aparece { animation: none; transform: none; opacity: 1; }
+  .cordon { animation: none; width: min(100%, 520px); }
+  .cordon::after { display: none; }
+}

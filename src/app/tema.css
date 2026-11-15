@@ -1,0 +1,88 @@
+/* Colores de la marca. Se cambian desde Panel > Colores y fondos. */
+html.dark,
+html.dark[data-tema="naranja"] {
+  --primary: #ff7a1a;
+  --primary-foreground: #15110b;
+  --acento-2: #ffb347;
+  --primary-rgb: 255, 122, 26;
+  --ring: #ff7a1a;
+}
+html.dark[data-tema="amarillo"] {
+  --primary: #f5c518;
+  --primary-foreground: #14110a;
+  --acento-2: #ffe27a;
+  --primary-rgb: 245, 197, 24;
+  --ring: #f5c518;
+}
+html.dark[data-tema="verde"] {
+  --primary: #8db63c;
+  --primary-foreground: #0f1507;
+  --acento-2: #c3dc7a;
+  --primary-rgb: 141, 182, 60;
+  --ring: #8db63c;
+}
+html.dark[data-tema="rojo"] {
+  --primary: #e5122d;
+  --primary-foreground: #ffffff;
+  --acento-2: #ff6b6b;
+  --primary-rgb: 229, 18, 45;
+  --ring: #e5122d;
+}
+html.dark[data-tema="azul"] {
+  --primary: #2f7df6;
+  --primary-foreground: #ffffff;
+  --acento-2: #7fb2ff;
+  --primary-rgb: 47, 125, 246;
+  --ring: #2f7df6;
+}
+html.dark[data-tema="blanco"] {
+  --primary: #f2f2f3;
+  --primary-foreground: #0e0e10;
+  --acento-2: #b9bcc4;
+  --primary-rgb: 242, 242, 243;
+  --ring: #f2f2f3;
+}
+html.dark[data-tema="cian"] {
+  --primary: #1ec8c8;
+  --primary-foreground: #04191a;
+  --acento-2: #7be9e9;
+  --primary-rgb: 30, 200, 200;
+  --ring: #1ec8c8;
+}
+html.dark[data-tema="morado"] {
+  --primary: #9b6bff;
+  --primary-foreground: #0f0a1a;
+  --acento-2: #c9b0ff;
+  --primary-rgb: 155, 107, 255;
+  --ring: #9b6bff;
+}
+html.dark[data-tema="dorado"] {
+  --primary: #d4a437;
+  --primary-foreground: #17120a;
+  --acento-2: #f0d27a;
+  --primary-rgb: 212, 164, 55;
+  --ring: #d4a437;
+}
+html.dark[data-tema="rosa"] {
+  --primary: #ff4f9a;
+  --primary-foreground: #1a0510;
+  --acento-2: #ffa0c9;
+  --primary-rgb: 255, 79, 154;
+  --ring: #ff4f9a;
+}
+
+/* Elementos del sitio que usan el color de la marca */
+.resplandor {
+  background: radial-gradient(640px circle at 78% 35%, rgba(var(--primary-rgb), 0.22), transparent 62%);
+}
+.cordon { background: linear-gradient(90deg, var(--primary), var(--acento-2), transparent); }
+.cordon::after { background: var(--acento-2); box-shadow: 0 0 16px 7px var(--primary); }
+@keyframes anillo {
+  0% { box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0.55); }
+  100% { box-shadow: 0 0 0 20px rgba(var(--primary-rgb), 0); }
+}
+.btn-jgl { color: var(--primary-foreground); }
+.btn-jgl-o { color: var(--foreground); }
+.btn-jgl-d { color: #fff; }
+/* Texto legible sobre el color de la marca */
+html .bg-primary.text-white { color: var(--primary-foreground); }
