@@ -5,7 +5,7 @@ import { useState } from "react";
 import { formatoCOP } from "@/lib/documentos/letras";
 import { crearEnlaceWhatsApp } from "@/lib/whatsapp";
 
-export type Producto = { nombre: string; categoria: string; descripcion: string; imagen_url: string | null; precio_desde: number };
+export type Producto = { nombre: string; categoria: string; descripcion: string; imagen_url: string | null; precio_desde: number; medidas: string; unidad_precio: string };
 
 export function GridCatalogo({ productos, whatsapp }: { productos: Producto[]; whatsapp: string }) {
   const [cat, setCat] = useState("Todos");
@@ -34,7 +34,8 @@ export function GridCatalogo({ productos, whatsapp }: { productos: Producto[]; w
             <div className="flex flex-1 flex-col p-5">
               <h3 className="font-display text-3xl uppercase leading-none">{p.nombre}</h3>
               <p className="mt-2 flex-1 text-sm text-muted-foreground">{p.descripcion}</p>
-              {p.precio_desde > 0 && <p className="mt-3 text-lg">Desde <b className="text-primary">{formatoCOP(p.precio_desde)}</b></p>}
+              {p.medidas && <p className="mt-3 text-sm text-muted-foreground">Medidas: <b className="text-foreground">{p.medidas}</b></p>}
+              {p.precio_desde > 0 && <p className="mt-1 text-lg">Desde <b className="text-primary">{formatoCOP(p.precio_desde)}</b>{p.unidad_precio ? ` por ${p.unidad_precio}` : ""}</p>}
               <a href={crearEnlaceWhatsApp(whatsapp, `Hola, quiero cotizar: ${p.nombre}`)} target="_blank" rel="noopener noreferrer" className="btn-jgl mt-5 self-start">
                 Cotizar <span className="flecha" aria-hidden="true">→</span>
               </a>

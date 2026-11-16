@@ -55,4 +55,16 @@ export const servicios: Servicio[] = [
       "Instalación incluida",
     ],
   },
+  {
+    id: "inoxidable",
+    nombre: "Trabajos en acero inoxidable",
+    descripcion:
+      "Fabricación y soldadura en acero inoxidable, con acabados limpios, resistentes y duraderos.",
+    capacidades: [
+      "Soldadura TIG en acero inoxidable",
+      "Barandas, pasamanos y escaleras en inox",
+      "Mesones y estructuras para cocinas y alimentos",
+      "Tanques y soportes",
+    ],
+  },
 ];

@@ -15,6 +15,7 @@ export type DatosDoc = {
   titular: string;
   validez: number;
   entrega: string;
+  valor_cotizacion?: number;
 };
 
 export function calcular(d: Pick<DatosDoc, "items" | "iva">) {
@@ -75,6 +76,11 @@ export function VistaDocumento({ d }: { d: DatosDoc }) {
       <p className="mt-4"><b>Valor en letras:</b> {numeroALetras(total)} pesos m/cte.</p>
       <p className="mt-1"><b>Forma de pago:</b> {d.forma_pago} · {d.cuenta} · Titular: {d.titular}</p>
       {cot && <p className="mt-1"><b>Validez de la oferta:</b> {d.validez} días · <b>Entrega:</b> {d.entrega}</p>}
+      {cot && (d.valor_cotizacion ?? 0) > 0 && (
+        <p className="mt-4 border-t border-neutral-300 pt-3">
+          <b>Valor de esta cotización (se cobra aparte del trabajo):</b> {formatoCOP(Number(d.valor_cotizacion))}
+        </p>
+      )}
     </div>
   );
 }

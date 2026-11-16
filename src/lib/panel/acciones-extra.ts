@@ -168,3 +168,81 @@ export async function registrarRecordatorio(id: string) {
   await sb.from("documentos").update({ ultimo_recordatorio: new Date().toISOString().slice(0, 10) }).eq("id", id);
   revalidatePath("/panel", "layout");
 }
+
+
+/* ---------- Editar y duplicar documentos ---------- */
+const itemDoc = z.object({ d: z.string().max(200), q: z.coerce.number().min(0), v: z.coerce.number().min(0) });
+const esquemaEditar = z.object({
+  fecha: z.string().min(8),
+  prestador: z.string().max(120),
+  identificacion: z.string().max(40),
+  cliente: z.string().trim().min(1).max(120),
+  cliente_whatsapp: z.string().max(30).default(""),
+  concepto: z.string().max(200),
+  iva: z.coerce.number().min(0).max(100),
+  forma_pago: z.string().max(60),
+  cuenta: z.string().max(60),
+  titular: z.string().max(80),
+  validez: z.coerce.number().int().min(0).max(365),
+  entrega: z.string().max(80),
+  valor_cotizacion: z.coerce.number().min(0).max(1e10).default(0),
+  items: z.array(itemDoc).min(1),
+});
+
+export async function actualizarDocumento(formData: FormData) {
+  const { sb } = await exigirAdmin();
+  const id = txt(formData, "id");
+  let items: unknown = [];
+  try { items = JSON.parse(txt(formData, "items")); } catch {}
+  const r = esquemaEditar.safeParse({ ...Object.fromEntries(formData), items });
+  if (!r.success) redirect(`/panel/documentos/${id}/editar?error=1`);
+
+  const d = r.data;
+  const subtotal = d.items.reduce((a, x) => a + x.q * x.v, 0);
+  const total = Math.round(subtotal * (1 + d.iva / 100));
+
+  // Si ya había una respuesta del cliente, el enlace anterior deja de valer: hay que generar uno nuevo.
+  const { data: actual } = await sb.from("documentos").select("tipo,aprobacion").eq("id", id).single();
+  const respondida = actual?.tipo === "cotizacion" && ["aprobada", "rechazada"].includes(actual.aprobacion);
+  const extra = respondida
+    ? { aprobacion: "sin_enviar", token_aprobacion: null, aprobada_en: null, aprobada_por: null, comentario_cliente: null }
+    : {};
+
+  await sb.from("documentos").update({ ...d, total, ...extra }).eq("id", id);
+  revalidatePath("/panel", "layout");
+  redirect(`/panel/documentos/${id}`);
+}
+
+export async function duplicarDocumento(formData: FormData) {
+  const { sb } = await exigirAdmin();
+  const id = txt(formData, "id");
+  const { data: o } = await sb.from("documentos").select("*").eq("id", id).single();
+  if (!o) redirect("/panel/documentos");
+
+  const { data: ultimo } = await sb
+    .from("documentos").select("numero").eq("tipo", o.tipo).order("numero", { ascending: false }).limit(1);
+  const numero = (ultimo?.[0]?.numero ?? 0) + 1;
+
+  const { data: nuevo } = await sb.from("documentos").insert({
+    tipo: o.tipo,
+    numero,
+    fecha: new Date().toISOString().slice(0, 10),
+    prestador: o.prestador,
+    identificacion: o.identificacion,
+    cliente: o.cliente,
+    cliente_whatsapp: o.cliente_whatsapp,
+    concepto: o.concepto,
+    items: o.items,
+    iva: o.iva,
+    forma_pago: o.forma_pago,
+    cuenta: o.cuenta,
+    titular: o.titular,
+    validez: o.validez,
+    entrega: o.entrega,
+    valor_cotizacion: o.valor_cotizacion,
+    total: o.total,
+  }).select("id").single();
+
+  revalidatePath("/panel", "layout");
+  redirect(nuevo ? `/panel/documentos/${nuevo.id}/editar` : "/panel/documentos");
+}

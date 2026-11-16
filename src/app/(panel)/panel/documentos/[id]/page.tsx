@@ -6,7 +6,9 @@ import { BotonImprimir } from "@/components/panel/BotonImprimir";
 import { EnlaceCotizacion } from "@/components/panel/EnlaceCotizacion";
 import { BotonRecordatorio } from "@/components/panel/BotonRecordatorio";
 import { formatoCOP } from "@/lib/documentos/letras";
-import { urlBase } from "@/lib/codigos";
+import { urlSitio } from "@/lib/codigos";
+import { duplicarDocumento } from "@/lib/panel/acciones-extra";
+import Link from "next/link";
 import { TituloPanel } from "@/components/panel/TituloPanel";
 import { boton, botonBorde } from "@/components/panel/estilos";
 
@@ -31,6 +33,7 @@ export default async function VerDocumento({ params }: { params: Promise<{ id: s
     titular: data.titular,
     validez: data.validez,
     entrega: data.entrega,
+    valor_cotizacion: Number(data.valor_cotizacion ?? 0),
   };
 
   return (
@@ -38,6 +41,11 @@ export default async function VerDocumento({ params }: { params: Promise<{ id: s
       <TituloPanel titulo={data.tipo === "cotizacion" ? "Cotización" : "Cuenta de cobro"}>
         <div className="flex gap-3">
           <BotonImprimir />
+          <Link href={`/panel/documentos/${id}/editar`} className={botonBorde}>Editar</Link>
+          <form action={duplicarDocumento}>
+            <input type="hidden" name="id" value={id} />
+            <button className={botonBorde}>Duplicar</button>
+          </form>
           <form action={borrarDocumento}>
             <input type="hidden" name="id" value={id} />
             <button className={botonBorde}>Borrar</button>
@@ -56,7 +64,7 @@ export default async function VerDocumento({ params }: { params: Promise<{ id: s
         </div>
       )}
       {data.tipo === "cotizacion" && (
-        <EnlaceCotizacion id={id} token={data.token_aprobacion} aprobacion={data.aprobacion} aprobadaPor={data.aprobada_por} comentario={data.comentario_cliente} whatsapp={data.cliente_whatsapp} cliente={data.cliente} numero={data.numero} base={urlBase()} />
+        <EnlaceCotizacion id={id} token={data.token_aprobacion} aprobacion={data.aprobacion} aprobadaPor={data.aprobada_por} comentario={data.comentario_cliente} whatsapp={data.cliente_whatsapp} cliente={data.cliente} numero={data.numero} base={await urlSitio()} />
       )}
       {data.tipo === "cuenta_cobro" && data.estado !== "pagado" && (
         <div className="mb-6 border border-border bg-card/90 p-4">

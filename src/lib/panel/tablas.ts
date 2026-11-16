@@ -123,7 +123,21 @@ TABLAS.productos = {
     { nombre: "descripcion", etiqueta: "Descripción", tipo: "largo" },
     { nombre: "imagen_url", etiqueta: "Foto", tipo: "imagen" },
     { nombre: "precio_desde", etiqueta: "Precio desde (COP, 0 = no mostrar)", tipo: "numero" },
+    { nombre: "unidad_precio", etiqueta: "El precio es por (ej. m², unidad, metro lineal)", tipo: "texto" },
+    { nombre: "medidas", etiqueta: "Medidas o metros cuadrados (ej. 20 m²)", tipo: "texto" },
     { nombre: "orden", etiqueta: "Orden", tipo: "numero" },
+    { nombre: "activo", etiqueta: "Visible en la página", tipo: "booleano" },
+  ],
+};
+
+TABLAS.aliados = {
+  titulo: "Aliados",
+  ayuda: "Empresas que respaldan a JGL. Aparecen en la página Nosotros, con su logo si lo subes.",
+  resumen: "nombre",
+  campos: [
+    { nombre: "nombre", etiqueta: "Nombre", tipo: "texto", requerido: true },
+    { nombre: "logo_url", etiqueta: "Logo (opcional)", tipo: "imagen" },
+    { nombre: "orden", etiqueta: "Orden", tipo: "numero", ayuda: "Menor número = aparece primero" },
     { nombre: "activo", etiqueta: "Visible en la página", tipo: "booleano" },
   ],
 };
@@ -134,6 +148,8 @@ export const FOTOS_PANEL = [
 ];
 
 export const AJUSTES_CAMPOS: { nombre: string; etiqueta: string; largo?: boolean }[] = [
+  { nombre: "inicio_titulo", etiqueta: "Título del inicio (una línea por renglón; la última se resalta)", largo: true },
+  { nombre: "inicio_subtitulo", etiqueta: "Texto debajo del título del inicio", largo: true },
   { nombre: "whatsapp", etiqueta: "WhatsApp (solo números; con el 57 al inicio)" },
   { nombre: "telefono_visible", etiqueta: "Teléfono que se muestra en la página" },
   { nombre: "correo", etiqueta: "Correo de contacto" },

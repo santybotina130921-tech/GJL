@@ -31,6 +31,7 @@ export default async function Cotizacion({ params }: { params: Promise<{ token: 
     titular: data.titular,
     validez: data.validez,
     entrega: data.entrega,
+    valor_cotizacion: Number(data.valor_cotizacion ?? 0),
   };
 
   return (

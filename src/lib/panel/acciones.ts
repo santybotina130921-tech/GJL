@@ -228,6 +228,7 @@ const esquemaDoc = z.object({
   identificacion: z.string().max(40),
   cliente: z.string().trim().min(1).max(120),
   cliente_whatsapp: z.string().max(30).default(""),
+  valor_cotizacion: z.coerce.number().min(0).max(1e10).default(0),
   concepto: z.string().max(200),
   iva: z.coerce.number().min(0).max(100),
   forma_pago: z.string().max(60),

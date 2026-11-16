@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { exigirAdmin } from "@/lib/panel/auth";
 import { borrarObra } from "@/lib/panel/acciones-extra";
-import { urlBase } from "@/lib/codigos";
+import { urlSitio } from "@/lib/codigos";
 import { EnlaceObra } from "@/components/panel/EnlaceObra";
 import { FormularioObra } from "@/components/panel/FormularioObra";
 import { GestorAvances } from "@/components/panel/GestorAvances";
@@ -33,7 +33,7 @@ export default async function EditarObra({
       {ok && <p className="mb-4 text-sm text-primary">Cambios guardados.</p>}
       {error && <p role="alert" className="mb-4 text-sm text-primary">Revisa los datos de la obra.</p>}
       <div className="space-y-10">
-        <EnlaceObra id={id} codigo={o.codigo} base={urlBase()} whatsapp={o.cliente_whatsapp} nombre={o.nombre} cliente={o.cliente} />
+        <EnlaceObra id={id} codigo={o.codigo} base={await urlSitio()} whatsapp={o.cliente_whatsapp} nombre={o.nombre} cliente={o.cliente} />
         <FormularioObra obra={o} />
         <section>
           <h2 className="mb-3 font-display text-2xl uppercase">Avances (lo que ve el cliente)</h2>

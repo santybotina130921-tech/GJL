@@ -34,7 +34,7 @@ export function Contador({ hasta, prefijo = "+" }: { hasta: number; prefijo?: st
   return (
     <span ref={ref}>
       {prefijo}
-      {valor}
+      {valor.toLocaleString("es-CO")}
     </span>
   );
 }

@@ -9,6 +9,9 @@ import type { Diapositiva } from "@/components/publico/Carrusel";
 export type Ajustes = Record<string, string>;
 
 const AJUSTES_BASE: Ajustes = {
+  inicio_titulo: "Estructuras metálicas\ny soldadura\nque aguantan.",
+  inicio_subtitulo:
+    "Fabricamos, soldamos y montamos estructuras para obras civiles, bodegas y viviendas dándole forma al metal y a tus sueños.",
   whatsapp: sitio.whatsapp,
   telefono_visible: sitio.telefonoVisible,
   correo: sitio.correo,
@@ -155,8 +158,8 @@ export const getTarifas = cache(() =>
 );
 
 export const getProductos = cache(() =>
-  leer<{ nombre: string; categoria: string; descripcion: string; imagen_url: string | null; precio_desde: number }>(
-    "productos", "nombre,categoria,descripcion,imagen_url,precio_desde", [],
+  leer<{ nombre: string; categoria: string; descripcion: string; imagen_url: string | null; precio_desde: number; medidas: string; unidad_precio: string }>(
+    "productos", "nombre,categoria,descripcion,imagen_url,precio_desde,medidas,unidad_precio", [],
   ),
 );
 
@@ -192,3 +195,13 @@ export const getEntrada = cache(async (slug: string): Promise<Entrada | null> =>
     return null;
   }
 });
+
+export const getAliados = cache(() =>
+  leer<{ nombre: string; logo_url: string | null }>("aliados", "nombre,logo_url", [
+    { nombre: "Ferrecortes", logo_url: null },
+    { nombre: "Agofer", logo_url: null },
+    { nombre: "Tornituercas", logo_url: null },
+    { nombre: "Montajes Estructurales JJ", logo_url: null },
+    { nombre: "Oxigenar", logo_url: null },
+  ]),
+);

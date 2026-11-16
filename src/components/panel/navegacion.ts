@@ -18,7 +18,7 @@ export const NAV: ItemNav[] = [
   { href: "/panel/contenido/estadisticas", texto: "Cifras del inicio", icono: "cifras", grupo: "Contenido del sitio" },
   { href: "/panel/contenido/hitos", texto: "Historia", icono: "historia", grupo: "Contenido del sitio" },
   { href: "/panel/contenido/equipo", texto: "Equipo", icono: "usuarios", grupo: "Contenido del sitio" },
-  { href: "/panel/contenido/certificaciones", texto: "Certificaciones", icono: "check", grupo: "Contenido del sitio" },
+  { href: "/panel/contenido/aliados", texto: "Aliados", icono: "usuarios", grupo: "Contenido del sitio" },
   { href: "/panel/contenido/preguntas", texto: "Preguntas frecuentes", icono: "preguntas", grupo: "Contenido del sitio" },
   { href: "/panel/contenido/testimonios", texto: "Testimonios", icono: "testimonios", grupo: "Contenido del sitio" },
   { href: "/panel/ajustes", texto: "Datos y redes", icono: "ajustes", grupo: "Contenido del sitio" },
