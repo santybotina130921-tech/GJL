@@ -28,5 +28,5 @@ export default async function ObraPorCodigo({ params }: { params: Promise<{ codi
   }
   const { data } = await crearClienteDirecto().rpc("obra_por_codigo", { c: codigo });
   if (!data) return <Aviso titulo="No encontramos esa obra" texto="Revisa que el código esté bien escrito o que el enlace siga activo." />;
-  return <VistaObra obra={data as ObraPublica} />;
+  return <VistaObra obra={data as ObraPublica} codigo={codigo} />;
 }

@@ -7,6 +7,7 @@ export const NAV: ItemNav[] = [
   { href: "/panel/mensajes", texto: "Mensajes", icono: "mensajes", grupo: "General" },
   { href: "/panel/visitas", texto: "Visitas técnicas", icono: "visitas", grupo: "General" },
   { href: "/panel/obras", texto: "Obras (seguimiento)", icono: "obras", grupo: "General" },
+  { href: "/panel/calificaciones", texto: "Calificaciones", icono: "testimonios", grupo: "General" },
   { href: "/panel/proyectos", texto: "Proyectos", icono: "proyectos", grupo: "General" },
   { href: "/panel/documentos", texto: "Cuentas de cobro y cotizaciones", icono: "documentos", grupo: "General" },
   { href: "/panel/finanzas", texto: "Ingresos y egresos", icono: "finanzas", grupo: "General" },

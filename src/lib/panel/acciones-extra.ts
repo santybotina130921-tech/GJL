@@ -246,3 +246,17 @@ export async function duplicarDocumento(formData: FormData) {
   revalidatePath("/panel", "layout");
   redirect(nuevo ? `/panel/documentos/${nuevo.id}/editar` : "/panel/documentos");
 }
+
+
+/* ---------- Calificaciones de clientes ---------- */
+export async function moderarCalificacion(formData: FormData) {
+  const { sb } = await exigirAdmin();
+  await sb.from("calificaciones").update({ aprobada: txt(formData, "aprobada") === "1" }).eq("id", txt(formData, "id"));
+  refrescar();
+}
+
+export async function borrarCalificacion(formData: FormData) {
+  const { sb } = await exigirAdmin();
+  await sb.from("calificaciones").delete().eq("id", txt(formData, "id"));
+  refrescar();
+}

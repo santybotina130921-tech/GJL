@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { CalificarObra } from "@/components/publico/seguimiento/CalificarObra";
 
 export type ObraPublica = {
   nombre: string;
@@ -10,12 +11,13 @@ export type ObraPublica = {
   fecha_inicio: string | null;
   fecha_estimada: string | null;
   avances: { nota: string; foto_url: string | null; fecha: string }[];
+  calificada?: boolean;
 };
 
 const ESTADOS = { en_proceso: "En proceso", pausada: "Pausada", terminada: "Terminada" } as const;
 const fecha = (f: string) => new Date(f + "T12:00:00").toLocaleDateString("es-CO", { day: "numeric", month: "long", year: "numeric" });
 
-export function VistaObra({ obra }: { obra: ObraPublica }) {
+export function VistaObra({ obra, codigo }: { obra: ObraPublica; codigo: string }) {
   return (
     <div className="mx-auto max-w-4xl px-5 py-16">
       <p className="text-sm text-muted-foreground">Obra de {obra.cliente}</p>
@@ -69,6 +71,11 @@ export function VistaObra({ obra }: { obra: ObraPublica }) {
           ))}
         </ol>
       </section>
+
+      {obra.estado === "terminada" && !obra.calificada && <CalificarObra codigo={codigo} />}
+      {obra.estado === "terminada" && obra.calificada && (
+        <p className="mt-12 border border-border bg-card p-6 text-muted-foreground">Gracias por calificar tu obra.</p>
+      )}
     </div>
   );
 }

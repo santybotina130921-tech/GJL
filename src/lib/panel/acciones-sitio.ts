@@ -57,3 +57,23 @@ export async function responderCotizacion(
   });
   return { ok: data === "ok" };
 }
+
+export async function calificarObra(
+  codigo: string,
+  estrellas: number,
+  nombre: string,
+  comentario: string,
+  trampa: string,
+): Promise<{ ok: boolean; motivo?: string }> {
+  if (trampa) return { ok: true }; // bots
+  if (!/^[A-Za-z0-9-]{6,20}$/.test(codigo)) return { ok: false, motivo: "codigo" };
+  if (!Number.isInteger(estrellas) || estrellas < 1 || estrellas > 5) return { ok: false, motivo: "datos" };
+  if (limitar(`calif:${await ipActual()}`, 5, 30 * 60_000)) return { ok: false, motivo: "intentos" };
+  const { data } = await crearClienteDirecto().rpc("calificar_obra", {
+    c: codigo,
+    e: estrellas,
+    comentario: comentario.trim().slice(0, 500),
+    quien: nombre.trim().slice(0, 60),
+  });
+  return data === "ok" ? { ok: true } : { ok: false, motivo: String(data ?? "error") };
+}

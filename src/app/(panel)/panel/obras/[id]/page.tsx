@@ -3,6 +3,7 @@ import { exigirAdmin } from "@/lib/panel/auth";
 import { borrarObra } from "@/lib/panel/acciones-extra";
 import { urlSitio } from "@/lib/codigos";
 import { EnlaceObra } from "@/components/panel/EnlaceObra";
+import { PedirCalificacion } from "@/components/panel/PedirCalificacion";
 import { FormularioObra } from "@/components/panel/FormularioObra";
 import { GestorAvances } from "@/components/panel/GestorAvances";
 import { TituloPanel } from "@/components/panel/TituloPanel";
@@ -34,6 +35,7 @@ export default async function EditarObra({
       {error && <p role="alert" className="mb-4 text-sm text-primary">Revisa los datos de la obra.</p>}
       <div className="space-y-10">
         <EnlaceObra id={id} codigo={o.codigo} base={await urlSitio()} whatsapp={o.cliente_whatsapp} nombre={o.nombre} cliente={o.cliente} />
+        {o.estado === "terminada" && <PedirCalificacion codigo={o.codigo} base={await urlSitio()} whatsapp={o.cliente_whatsapp} cliente={o.cliente} nombre={o.nombre} />}
         <FormularioObra obra={o} />
         <section>
           <h2 className="mb-3 font-display text-2xl uppercase">Avances (lo que ve el cliente)</h2>

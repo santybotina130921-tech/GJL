@@ -205,3 +205,19 @@ export const getAliados = cache(() =>
     { nombre: "Oxigenar", logo_url: null },
   ]),
 );
+
+export type Calificacion = { estrellas: number; comentario: string; nombre: string };
+
+export const getCalificaciones = cache(async (): Promise<Calificacion[]> => {
+  try {
+    const { data } = await crearClientePublico()
+      .from("calificaciones")
+      .select("estrellas,comentario,nombre")
+      .eq("aprobada", true)
+      .order("creado_en", { ascending: false })
+      .limit(30);
+    return (data as Calificacion[] | null) ?? [];
+  } catch {
+    return [];
+  }
+});
