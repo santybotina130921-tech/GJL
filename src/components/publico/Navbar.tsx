@@ -85,12 +85,12 @@ export function Navbar() {
             </button>
           </div>
           <div className="mt-10 flex flex-col gap-6">
-            {[...enlaces, { href: "/login", texto: "Ingresar" }].map((e, i) => (
+            {[...enlaces, { href: "/visita", texto: "Agendar visita" }, { href: "/seguimiento", texto: "Seguimiento de obra" }, { href: "/login", texto: "Ingresar" }].map((e, i) => (
               <Link
                 key={e.href}
                 href={e.href}
                 onClick={() => setAbierto(false)}
-                className="entrar font-display text-5xl font-bold uppercase"
+                className="entrar font-display text-4xl uppercase"
                 style={{ animationDelay: `${i * 70}ms` }}
               >
                 {e.texto}

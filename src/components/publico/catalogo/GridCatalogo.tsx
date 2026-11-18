@@ -30,6 +30,7 @@ export function GridCatalogo({ productos, whatsapp }: { productos: Producto[]; w
             <div className="placeholder-acero relative aspect-[4/3] overflow-hidden">
               {p.imagen_url && <Image src={p.imagen_url} alt={p.nombre} fill sizes="(min-width: 1024px) 33vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-110" />}
               {p.categoria && <span className="absolute left-3 top-3 bg-primary px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary-foreground">{p.categoria}</span>}
+              <span className="absolute bottom-2 right-2 bg-black/60 px-2 py-0.5 text-[10px] uppercase tracking-wider text-white/80">Imagen ilustrativa</span>
             </div>
             <div className="flex flex-1 flex-col p-5">
               <h3 className="font-display text-3xl uppercase leading-none">{p.nombre}</h3>

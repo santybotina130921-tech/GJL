@@ -14,6 +14,8 @@ export const urlBase = () =>
 
 /** Solo se aceptan fotos que vengan del almacén de Supabase. */
 export function urlSegura(u: string): string | null {
+  // Fotos que viajan con el sitio (carpeta public)
+  if (/^\/(proyectos|catalogo|blog|fondos|carrusel)\/[A-Za-z0-9_\-./]+$/.test(u) && !u.includes("..")) return u;
   try {
     const x = new URL(u);
     return x.protocol === "https:" && x.hostname.endsWith(".supabase.co") ? x.toString() : null;

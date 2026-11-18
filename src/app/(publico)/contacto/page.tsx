@@ -1,6 +1,7 @@
 import { Fondo } from "@/components/publico/Fondo";
 import { FormularioContacto } from "@/components/publico/contacto/FormularioContacto";
 import { InfoContacto } from "@/components/publico/contacto/InfoContacto";
+import { AccesosRapidos } from "@/components/publico/secciones/AccesosRapidos";
 import { getAjustes } from "@/lib/datos";
 
 export const metadata = { title: "Contacto | JGL Estructural" };
@@ -9,6 +10,7 @@ export const revalidate = 60;
 export default async function PaginaContacto() {
   const a = await getAjustes();
   return (
+    <>
     <section className="relative isolate overflow-hidden">
       <Fondo clave="fondo_contacto" velo="bg-background/85" />
       <div className="resplandor absolute inset-0 -z-10" aria-hidden="true" />
@@ -23,5 +25,7 @@ export default async function PaginaContacto() {
         <FormularioContacto whatsapp={a.whatsapp} />
       </div>
     </section>
+    <AccesosRapidos />
+    </>
   );
 }
